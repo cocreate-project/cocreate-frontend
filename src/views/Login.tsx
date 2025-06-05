@@ -20,7 +20,7 @@ export default function Login() {
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     setIsLoading(true);
     const loginValidation = authValidation.validateLogin(username, password);
     if (!loginValidation.success) {

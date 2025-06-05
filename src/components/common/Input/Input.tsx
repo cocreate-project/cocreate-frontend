@@ -102,7 +102,9 @@ export default function Input({
         )}
 
         <input
-          type={type === 'password' ? (showPassword ? 'text' : 'password') : type}
+          type={
+            type === 'password' ? (showPassword ? 'text' : 'password') : type
+          }
           className={inputStyles}
           disabled={disabled}
           onKeyDown={handleKeyDown}

@@ -61,12 +61,9 @@ export default function Button({
   const baseStyles = `inline-flex items-center justify-center transition-all duration-200 font-medium focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-95 ${sizeStyles[size]} ${roundnessStyles[roundness]}`;
 
   const variantStyles = {
-    primary:
-      'bg-blue-500 text-black hover:bg-blue-600 hover:text-black',
-    secondary:
-      'border-1 border-white/20 text-white hover:bg-gray-900',
-    'secondary-filled':
-      'bg-gray-600 text-gray-200 hover:bg-gray-700',
+    primary: 'bg-blue-500 text-black hover:bg-blue-600 hover:text-black',
+    secondary: 'border-1 border-white/20 text-white hover:bg-gray-900',
+    'secondary-filled': 'bg-gray-600 text-gray-200 hover:bg-gray-700',
   };
 
   const buttonGroupStyles = `inline-flex items-center justify-center rounded-md transition-all duration-200 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-95 p-2 font-semibold text-sm ${selected ? 'bg-surface text-white shadow-md' : 'text-gray-500 bg-transparent shadow-none'}`;

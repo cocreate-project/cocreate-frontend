@@ -112,16 +112,16 @@ export default function Setup() {
             className="w-full h-40 p-2 resize-none rounded-md border border-white/20"
           ></textarea>
           <div className="flex w-full gap-2">
-          {step === 3 && (
-            <Button variant="secondary" size="sm" className="w-full gap-1.5">
-              Saltar
+            {step === 3 && (
+              <Button variant="secondary" size="sm" className="w-full gap-1.5">
+                Saltar
+                <Icon icon="mdi:arrow-right" />
+              </Button>
+            )}
+            <Button variant="primary" size="sm" className="w-full gap-1.5">
+              Continuar
               <Icon icon="mdi:arrow-right" />
             </Button>
-          )}
-          <Button variant="primary" size="sm" className="w-full gap-1.5">
-            Continuar
-            <Icon icon="mdi:arrow-right" />
-          </Button>
           </div>
         </form>
         {error && <p className="text-red-500">{error}</p>}

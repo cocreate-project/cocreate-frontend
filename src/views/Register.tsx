@@ -21,7 +21,7 @@ export default function Register() {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     setIsLoading(true);
     const registerValidation = authValidation.validateRegister(
       username,
@@ -78,11 +78,7 @@ export default function Register() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <Button
-            variant="primary"
-            size="sm"
-            isLoading={isLoading}
-          >
+          <Button variant="primary" size="sm" isLoading={isLoading}>
             Registrarse
           </Button>
         </form>
