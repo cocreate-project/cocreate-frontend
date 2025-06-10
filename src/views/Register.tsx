@@ -54,8 +54,8 @@ export default function Register() {
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center gap-2 justify-center h-full w-full">
-      <div className="border border-white/20 p-4 rounded-lg min-w-96 flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center gap-2 justify-center h-full w-full px-4">
+      <div className="border border-white/20 p-4 rounded-lg w-full md:min-w-96 flex flex-col items-center justify-center gap-4">
         <span className="text-2xl font-bold w-full">CoCreate</span>
         <form className="flex flex-col gap-2 w-full" onSubmit={handleRegister}>
           <Input

@@ -1,8 +1,10 @@
+import { Avatar } from "../common/Avatar";
+
 export default function Header() {
   return (
-    <header className="w-full flex p-4 py-6 border-b border-white/20">
+    <header className="w-full flex p-4 border-b items-center justify-between border-white/20">
       <svg
-        className="h-6"
+        className="h-5"
         viewBox="0 0 522 81"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -12,6 +14,7 @@ export default function Header() {
           fill="white"
         />
       </svg>
+      <Avatar />
     </header>
   );
 }
