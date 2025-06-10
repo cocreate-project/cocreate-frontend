@@ -14,19 +14,24 @@ export default function Setup() {
   const [step, setStep] = useState(1);
 
   const [user, setUser] = useAtom(userAtom);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    setIsLoading(true);
+
     if (step === 1) {
       const response = await settingsApi.setContentType(contentType);
       if (response.success) {
         setUser(user ? { ...user, content_type: contentType } : null);
         setStep(2);
+        setIsLoading(false);
       } else {
         setError(response.message);
+        setIsLoading(false);
       }
     }
 
@@ -35,8 +40,10 @@ export default function Setup() {
       if (response.success) {
         setUser(user ? { ...user, target_audience: targetAudience } : null);
         setStep(3);
+        setIsLoading(false);
       } else {
         setError(response.message);
+        setIsLoading(false);
       }
     }
 
@@ -47,9 +54,11 @@ export default function Setup() {
         setUser(
           user ? { ...user, additional_context: additionalContext } : null,
         );
+        setIsLoading(false);
         navigate('/');
       } else {
         setError(response.message);
+        setIsLoading(false);
       }
     }
   };
@@ -113,12 +122,22 @@ export default function Setup() {
           ></textarea>
           <div className="flex w-full gap-2">
             {step === 3 && (
-              <Button variant="secondary" size="sm" className="w-full gap-1.5">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="w-full gap-1.5"
+                isLoading={isLoading}
+              >
                 Saltar
                 <Icon icon="mdi:arrow-right" />
               </Button>
             )}
-            <Button variant="primary" size="sm" className="w-full gap-1.5">
+            <Button
+              variant="primary"
+              size="sm"
+              className="w-full gap-1.5"
+              isLoading={isLoading}
+            >
               Continuar
               <Icon icon="mdi:arrow-right" />
             </Button>

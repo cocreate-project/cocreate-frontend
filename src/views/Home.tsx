@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { userAtom, isUserDataLoadingAtom } from '../atoms/userAtoms';
 import { useNavigate } from 'react-router';
 import { userApi } from '../services/api';
+import Header from '../components/layout/Header';
 
 export default function Home() {
   const [user, setUser] = useAtom(userAtom);
@@ -40,5 +41,9 @@ export default function Home() {
     }
   }, [user, isUserDataLoading]);
 
-  return <div>Home</div>;
+  return (
+    <div className="flex flex-col gap-2 h-full w-full">
+      <Header />
+    </div>
+  );
 }
