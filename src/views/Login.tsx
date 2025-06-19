@@ -49,8 +49,8 @@ export default function Login() {
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center gap-2 justify-center h-full w-full px-4">
-      <div className="border border-white/20 p-4 rounded-lg w-full md:min-w-96 flex flex-col items-center justify-center gap-4">
+    <div className="flex flex-col items-center gap-2 justify-center h-[100dvh] w-full px-4">
+      <div className="border border-white/20 p-4 rounded-lg w-full max-w-96 flex flex-col items-center justify-center gap-4">
         <span className="text-2xl font-bold w-full">CoCreate</span>
         <form className="flex flex-col gap-2 w-full" onSubmit={handleLogin}>
           <Input
