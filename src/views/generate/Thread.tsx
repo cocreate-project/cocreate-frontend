@@ -6,6 +6,7 @@ import { Header } from '../../components/layout/Header';
 import { Button } from '../../components/common/Button';
 import { generateApi } from '../../services/api';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import Markdown from 'react-markdown';
 
 export default function Thread() {
   const [user] = useAtom(userAtom);
@@ -54,7 +55,7 @@ export default function Thread() {
                 <Avatar />
                 <span>{user?.username}</span>
               </div>
-              <span>{thread}</span>
+              <Markdown>{thread}</Markdown>
               {index < generatedThread.length - 1 && (
                 <div className="absolute -bottom-4 w-px h-4 bg-white/20" />
               )}
