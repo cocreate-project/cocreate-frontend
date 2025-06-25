@@ -1,24 +1,27 @@
 import { useState, useEffect } from 'react';
+import { useAtom } from 'jotai';
+import { userAtom } from '../../atoms/userAtoms';
+import { Avatar } from '../../components/common/Avatar';
 import { Header } from '../../components/layout/Header';
 import { Button } from '../../components/common/Button';
-import ReactMarkdown from 'react-markdown';
 import { generateApi } from '../../services/api';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
-export default function VideoScript() {
+export default function Thread() {
+  const [user] = useAtom(userAtom);
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedScript, setGeneratedScript] = useState('');
+  const [generatedThread, setGeneratedThread] = useState<any>(null);
   const [error, setError] = useState('');
 
-  const handleGenerateVideoScript = async () => {
+  const handleGenerateThread = async () => {
     setIsLoading(true);
-    const response = await generateApi.generateVideoScript(prompt);
+    const response = await generateApi.generateThread(prompt);
     console.log(response);
     if (!response.success) {
       setError(response.message);
     } else {
-      setGeneratedScript(response.message);
+      setGeneratedThread(response.message);
       setError('');
     }
     setIsLoading(false);
@@ -35,61 +38,47 @@ export default function VideoScript() {
   return (
     <div className="flex flex-col gap-4 h-full w-full">
       <Header />
-      {generatedScript ? (
+      {generatedThread ? (
         <div className="flex flex-col gap-4 pb-6 px-4 max-w-4xl mx-auto">
           <div className="flex items-center">
-            <Button variant="secondary" onClick={() => setGeneratedScript('')}>
+            <Button variant="secondary" onClick={() => setGeneratedThread('')}>
               <Icon icon="mdi:restart" />
             </Button>
           </div>
-          <ReactMarkdown
-            components={{
-              code: ({ className, children, ...props }: any) => {
-                const isInline = !className?.includes('language-');
-                return isInline ? (
-                  <code
-                    className="bg-white/10 px-1 py-0.5 rounded text-sm"
-                    {...props}
-                  >
-                    {children}
-                  </code>
-                ) : (
-                  <code
-                    className="block p-1 rounded-md text-sm overflow-x-auto whitespace-pre-wrap break-words"
-                    {...props}
-                  >
-                    {children}
-                  </code>
-                );
-              },
-              pre: ({ children }: any) => (
-                <pre className="bg-white/10 p-3 rounded-md overflow-x-auto">
-                  {children}
-                </pre>
-              ),
-            }}
-          >
-            {generatedScript}
-          </ReactMarkdown>
+          {generatedThread.map((thread: string, index: number) => (
+            <div
+              className="relative flex flex-col items-start gap-2 border border-white/20 rounded-md p-4"
+              key={thread}
+            >
+              <div className="flex items-center gap-2">
+                <Avatar />
+                <span>{user?.username}</span>
+              </div>
+              <span>{thread}</span>
+              {index < generatedThread.length - 1 && (
+                <div className="absolute -bottom-4 w-px h-4 bg-white/20" />
+              )}
+            </div>
+          ))}
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-2 px-4 w-full max-w-4xl mx-auto">
           <h1 className="text-2xl font-semibold flex w-full mb-2  ">
-            Generar guión de video
+            Generar Hilo de X
           </h1>
           <textarea
             rows={6}
             className="w-full h-full bg-white/10 outline-none rounded-md p-4 resize-none"
-            placeholder="ej. tutorial paso a paso de como hacer una torta de chocolate"
+            placeholder="ej. hilo explicando una funcionalidad poco conocida pero muy util de JavaScript"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
           />
           <Button
-            onClick={handleGenerateVideoScript}
+            onClick={handleGenerateThread}
             isLoading={isLoading}
             className="w-full"
           >
-            Generar guión
+            Generar hilo
           </Button>
           {error && <p className="text-red-500">{error}</p>}
         </div>

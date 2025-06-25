@@ -1,5 +1,8 @@
 import { RouteObject } from 'react-router';
 import VideoScript from '../views/generate/VideoScript';  
+import ContentIdea from '../views/generate/ContentIdea';
+import Newsletter from '../views/generate/Newsletter';
+import Thread from '../views/generate/Thread';
 
 const generateRoutes: RouteObject[] = [
   {
@@ -8,12 +11,15 @@ const generateRoutes: RouteObject[] = [
   },
   {
     path: '/generate/content-idea',
+    Component: ContentIdea,
   },
   {
     path: '/generate/newsletter',
+    Component: Newsletter,
   },
   {
     path: '/generate/thread',
+    Component: Thread,
   },
 ];
 

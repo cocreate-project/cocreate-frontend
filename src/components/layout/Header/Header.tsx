@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { Avatar } from '../common/Avatar';
+import { Avatar } from '../../common/Avatar';
 
 export default function Header() {
   const navigate = useNavigate();

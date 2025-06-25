@@ -5,20 +5,20 @@ import ReactMarkdown from 'react-markdown';
 import { generateApi } from '../../services/api';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
-export default function VideoScript() {
+export default function ContentIdea() {
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedScript, setGeneratedScript] = useState('');
+  const [generatedIdea, setGeneratedIdea] = useState('');
   const [error, setError] = useState('');
 
-  const handleGenerateVideoScript = async () => {
+  const handleGenerateContentIdea = async () => {
     setIsLoading(true);
-    const response = await generateApi.generateVideoScript(prompt);
+    const response = await generateApi.generateContentIdea(prompt);
     console.log(response);
     if (!response.success) {
       setError(response.message);
     } else {
-      setGeneratedScript(response.message);
+      setGeneratedIdea(response.message);
       setError('');
     }
     setIsLoading(false);
@@ -35,10 +35,10 @@ export default function VideoScript() {
   return (
     <div className="flex flex-col gap-4 h-full w-full">
       <Header />
-      {generatedScript ? (
+      {generatedIdea ? (
         <div className="flex flex-col gap-4 pb-6 px-4 max-w-4xl mx-auto">
           <div className="flex items-center">
-            <Button variant="secondary" onClick={() => setGeneratedScript('')}>
+            <Button variant="secondary" onClick={() => setGeneratedIdea('')}>
               <Icon icon="mdi:restart" />
             </Button>
           </div>
@@ -69,27 +69,27 @@ export default function VideoScript() {
               ),
             }}
           >
-            {generatedScript}
+            {generatedIdea}
           </ReactMarkdown>
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center gap-2 px-4 w-full max-w-4xl mx-auto">
           <h1 className="text-2xl font-semibold flex w-full mb-2  ">
-            Generar guión de video
+            Generar ideas de contenido
           </h1>
           <textarea
             rows={6}
             className="w-full h-full bg-white/10 outline-none rounded-md p-4 resize-none"
-            placeholder="ej. tutorial paso a paso de como hacer una torta de chocolate"
+            placeholder="ej. ideas de tips de Python para principiantes"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
           />
           <Button
-            onClick={handleGenerateVideoScript}
+            onClick={handleGenerateContentIdea}
             isLoading={isLoading}
             className="w-full"
           >
-            Generar guión
+            Generar idea
           </Button>
           {error && <p className="text-red-500">{error}</p>}
         </div>
