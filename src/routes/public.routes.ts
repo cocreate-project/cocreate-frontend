@@ -3,6 +3,7 @@ import Home from '../views/Home';
 import Login from '../views/Login';
 import Register from '../views/Register';
 import Setup from '../views/Setup';
+import Settings from '../views/Settings';
 
 const publicRoutes: RouteObject[] = [
   {
@@ -20,6 +21,10 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/setup',
     Component: Setup,
+  },
+  {
+    path: '/settings',
+    Component: Settings,
   },
 ];
 
