@@ -36,7 +36,7 @@ export default function ButtonGroup({
   return (
     <ButtonGroupContext.Provider value={true}>
       <div
-        className={`inline-flex p-1 gap-1 bg-gray-800 rounded-md overflow-hidden ${className}`}
+        className={`inline-flex p-1 gap-1 bg-neutral-900 rounded-md overflow-hidden ${className}`}
       >
         {React.Children.map(children, (child, index) => {
           if (React.isValidElement(child)) {

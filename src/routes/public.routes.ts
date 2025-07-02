@@ -4,6 +4,7 @@ import Login from '../views/Login';
 import Register from '../views/Register';
 import Setup from '../views/Setup';
 import Settings from '../views/Settings';
+import Generations from '../views/Generations';
 
 const publicRoutes: RouteObject[] = [
   {
@@ -25,6 +26,10 @@ const publicRoutes: RouteObject[] = [
   {
     path: '/settings',
     Component: Settings,
+  },
+  {
+    path: '/generations',
+    Component: Generations,
   },
 ];
 

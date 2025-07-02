@@ -4,24 +4,61 @@ import { Button } from '../../components/common/Button';
 import ReactMarkdown from 'react-markdown';
 import { generateApi } from '../../services/api';
 import { Icon } from '@iconify/react/dist/iconify.js';
+import type { ComponentPropsWithoutRef } from 'react';
+
+interface Generation {
+  id: number;
+  type: 'video_script' | 'content_idea' | 'newsletter' | 'thread';
+  prompt: string;
+  content: string;
+  created_at: string;
+  saved: boolean;
+}
 
 export default function VideoScript() {
   const [prompt, setPrompt] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [generatedScript, setGeneratedScript] = useState('');
   const [error, setError] = useState('');
+  const [currentGeneration, setCurrentGeneration] = useState<Generation | null>(null);
 
   const handleGenerateVideoScript = async () => {
     setIsLoading(true);
     const response = await generateApi.generateVideoScript(prompt);
-    console.log(response);
     if (!response.success) {
       setError(response.message);
     } else {
       setGeneratedScript(response.message);
+      // After successful generation, fetch the latest generation
+      const allGens = await generateApi.getAllGenerations();
+      if (allGens.success && allGens.generations && allGens.generations.length > 0) {
+        setCurrentGeneration(allGens.generations[0]);
+      }
       setError('');
     }
     setIsLoading(false);
+  };
+
+  const handleSaveGeneration = async () => {
+    if (!currentGeneration) return;
+    
+    const response = await generateApi.saveGeneration(currentGeneration.id);
+    if (response.success) {
+      setCurrentGeneration({ ...currentGeneration, saved: true });
+    } else {
+      setError(response.message);
+    }
+  };
+
+  const handleUnsaveGeneration = async () => {
+    if (!currentGeneration) return;
+    
+    const response = await generateApi.unsaveGeneration(currentGeneration.id);
+    if (response.success) {
+      setCurrentGeneration({ ...currentGeneration, saved: false });
+    } else {
+      setError(response.message);
+    }
   };
 
   useEffect(() => {
@@ -37,14 +74,25 @@ export default function VideoScript() {
       <Header />
       {generatedScript ? (
         <div className="flex flex-col gap-4 pb-6 px-4 max-w-4xl mx-auto">
-          <div className="flex items-center">
-            <Button variant="secondary" onClick={() => setGeneratedScript('')}>
+          <div className="flex items-center gap-2">
+            <Button variant="secondary" onClick={() => {
+              setGeneratedScript('');
+              setCurrentGeneration(null);
+            }}>
               <Icon icon="mdi:restart" />
             </Button>
+            {currentGeneration && (
+              <Button
+                variant="secondary"
+                onClick={currentGeneration.saved ? handleUnsaveGeneration : handleSaveGeneration}
+              >
+                <Icon icon={currentGeneration.saved ? 'mdi:bookmark' : 'mdi:bookmark-outline'} />
+              </Button>
+            )}
           </div>
           <ReactMarkdown
             components={{
-              code: ({ className, children, ...props }: any) => {
+              code: ({ className, children, ...props }: ComponentPropsWithoutRef<'code'>) => {
                 const isInline = !className?.includes('language-');
                 return isInline ? (
                   <code
@@ -62,7 +110,7 @@ export default function VideoScript() {
                   </code>
                 );
               },
-              pre: ({ children }: any) => (
+              pre: ({ children }: ComponentPropsWithoutRef<'pre'>) => (
                 <pre className="bg-white/10 p-3 rounded-md overflow-x-auto">
                   {children}
                 </pre>
